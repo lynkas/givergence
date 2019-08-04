@@ -44,12 +44,8 @@
   foreach($links as $key=>$item) {
 
       echo "<div id=\"".($key+1)."\" style=\"color:white;width:100%;text-align:center\">".($key+1)."/".count($_GET['link'])."</div>";
-      if ($key==0) {
-        echo "<video id=\"v".($key+1)."\" controls style=\"max-width: 100% ;max-height:95vh;display: block;margin-left: auto;margin-right: auto;margin-top: 10px\" >";
-      }else {
-        echo "<video id=\"v".($key+1)."\" preload=\"none\" controls style=\"max-width: 100% ;max-height:95vh;display: block;margin-left: auto;margin-right: auto;margin-top: 10px\" >";
-      }
 
+        echo "<video id=\"v".($key+1)."\" preload=\"none\" controls style=\"max-width: 100% ;max-height:95vh;display: block;margin-left: auto;margin-right: auto;margin-top: 10px\" >";
       echo "<source src=\"".$item."\" type=\"video/mp4\">";
       echo "</video>";
       echo "<div style=\"text-align: center;color: white;width: 100%;height: 30px;line-height: 30px\"><a href=".$item.">下载上面的视频</a></div>";
