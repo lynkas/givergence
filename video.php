@@ -21,6 +21,7 @@
         }
         </style>
 </head>
+
 <?php if (array_key_exists("head",$_GET)||array_key_exists("link",$_GET)) {?>
   <body style="margin: 0;background: black">
 
@@ -32,6 +33,11 @@
   if( array_key_exists("title",$a)){
     echo "<h2 style=\"text-align: center;color:white\">".  $a['title']."</h2>";
   }
+  ?>
+  <div style="text-align:center;margin-bottom:10px">
+    <button id="addbm">添加本页到书签</button>
+  </div>
+  <?php
 
   if(array_key_exists("head",$a)){
     $head=$_GET['head'];
@@ -79,6 +85,15 @@ try {
 } finally {
 
 }
+
+document.getElementById("addbm").addEventListener("click",function(){
+  var createBookmark = browser.bookmarks.create({
+    title: document.title,
+      url: window.location.href
+    });
+
+})
+
 var playing=null;
 var medias = Array.prototype.slice.apply(document.querySelectorAll('audio,video'));
 medias.forEach(function(media) {
