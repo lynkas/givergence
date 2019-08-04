@@ -34,9 +34,9 @@
     echo "<h2 style=\"text-align: center;color:white\">".  $a['title']."</h2>";
   }
   ?>
-  <div style="text-align:center;margin-bottom:10px">
-    <button id="addbm">添加本页到书签</button>
-  </div>
+  <!-- <div style="text-align:center;margin-bottom:10px"> -->
+    <!-- <button id="addbm">添加本页到书签</button> -->
+  <!-- </div> -->
   <?php
 
   if(array_key_exists("head",$a)){
@@ -86,13 +86,13 @@ try {
 
 }
 
-document.getElementById("addbm").addEventListener("click",function(){
-  var createBookmark = browser.bookmarks.create({
-    title: document.title,
-      url: window.location.href
-    });
-
-})
+// document.getElementById("addbm").addEventListener("click",function(){
+//   var createBookmark = browser.bookmarks.create({
+//     title: document.title,
+//       url: window.location.href
+//     });
+//
+// })
 
 var playing=null;
 var medias = Array.prototype.slice.apply(document.querySelectorAll('audio,video'));
