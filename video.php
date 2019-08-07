@@ -124,9 +124,100 @@ record();
   <button class="gene" id="go">生成地址</button>
   <input class="gene" id="ip" />
 
+  <input class="gene" id="kw" placeholder="（可选）/s/???????????????????"/>
+  <button class="gene" id="gst">生成短地址</button>
+  <div class="gene" id="status"></div>
+
+  <input class="gene" id="st" />
+
+
 </div>
   </body>
   <script>
+
+  var ajax = {};
+  ajax.x = function () {
+      if (typeof XMLHttpRequest !== 'undefined') {
+          return new XMLHttpRequest();
+      }
+      var versions = [
+          "MSXML2.XmlHttp.6.0",
+          "MSXML2.XmlHttp.5.0",
+          "MSXML2.XmlHttp.4.0",
+          "MSXML2.XmlHttp.3.0",
+          "MSXML2.XmlHttp.2.0",
+          "Microsoft.XmlHttp"
+      ];
+
+      var xhr;
+      for (var i = 0; i < versions.length; i++) {
+          try {
+              xhr = new ActiveXObject(versions[i]);
+              break;
+          } catch (e) {
+          }
+      }
+      return xhr;
+  };
+
+  ajax.send = function (url, callback, method, data, async) {
+      if (async === undefined) {
+          async = true;
+      }
+      var x = ajax.x();
+      x.open(method, url, async);
+      x.onreadystatechange = function () {
+          if (x.readyState == 4) {
+              callback(x.responseText)
+          }
+      };
+      if (method == 'POST') {
+          x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      }
+      x.send(data)
+  };
+
+  ajax.get = function (url, data, callback, async) {
+      var query = [];
+      for (var key in data) {
+          query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+      }
+      ajax.send(url + (query.length ? '?' + query.join('&') : ''), callback, 'GET', null, async)
+  };
+
+  ajax.post = function (url, data, callback, async) {
+      var query = [];
+      for (var key in data) {
+          query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+      }
+      ajax.send(url, callback, 'POST', query.join('&'), async)
+  };
+
+function short(){
+  ajax.get('/s/yourls-api.php', {
+    action:   "shorturl",
+       format:   "json",
+       url:      document.getElementById("ip").value,
+       keyword:document.getElementById("kw").value
+    }, function(e) {
+      var res= JSON.parse(e)
+      if (res.status==="success") {
+        document.getElementById("status").innerText="OwO"
+        document.getElementById("st").value=res.shorturl
+
+      }else {
+        document.getElementById("status").innerText="＞︿＜"
+      }
+    });
+
+
+}
+document.getElementById("gst").addEventListener("click",function(){
+  clk();
+  short();
+})
+
+
       function lcss(arr1){
         var arr= arr1.concat().sort(),
         a1= arr[0], a2= arr[arr.length-1], L= a1.length, i= 0;
